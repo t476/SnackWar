@@ -51,5 +51,26 @@ public class PlayerMove : MonoBehaviour
 
     }
 
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+      
+        {
+            if (GameManager.Instance.isSuperPlayer)//这个跟那个一模一样为什么这个不行
+            {
+                if (collision.gameObject.CompareTag("barrier"))
+                {
+
+                    Destroy(collision.gameObject);
+                    GameManager.Instance.score += 20;
+                }
+
+
+            }
+
+
+            
+
+        }
+    }
 }
 

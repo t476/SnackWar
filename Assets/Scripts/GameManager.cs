@@ -35,11 +35,7 @@ public class GameManager : MonoBehaviour
     public GameObject book;
     //UI
     public GameObject winPrefab;
-    public GameObject startCountDownPrefab;
-    public GameObject gameoverPrefab;
-    public AudioClip startclip;
-    public GameObject startPanel;
-    public GameObject gamePanel;
+
     public Text scoreText;
     //计时
     public float timer = 180;
@@ -62,82 +58,65 @@ public class GameManager : MonoBehaviour
 
         _instance = this;
 
+        
+    }
+
+    private void Start()
+    {
+        Invoke("CreateSuperSnack", 10f);
+    }
 
 
 
 
+
+
+
+    private void Update()//实时记得分,计时
+    {
         //把所有零食放在一个列表下，为每隔一段时间生成一个超级零食做准备
         foreach (Transform t in GameObject.Find("Snacks").transform)
         {
             snackGos.Add(t.gameObject);
         }
         snackNum = GameObject.Find("Snacks").transform.childCount;
-    }
-
-    //start设置开始时大家都不许动
-    private void Start()
-    {
-        SetGameState(false);
-    }
-
-   
-    
-    //倒计时UI
-    IEnumerator PlayStartCountDown()
-    {
-        GameObject go = Instantiate(startCountDownPrefab);
-        yield return new WaitForSeconds(4f);//yield:出产
-        Destroy(go);
-        SetGameState(true);
-        Invoke("CreateSuperSnack", 10f);
-       
-       
-    }
 
 
-    private void Update()//实时记得分,计时
-    {   //计时
-        //  if (gamePanel.activeInHierarchy && timer > 0)
+
+        //计时
+        if (timer > 0)
         {
 
             timer -= Time.deltaTime;
             int minutes = (int)timer / 60 - 1;
             minutes = (int)timer / 60;
             float seconds = timer % 60;
-            timeText.text = "0" + minutes.ToString("2") + ":" + seconds.ToString("00");
+            timeText.text = "0"+ minutes.ToString() + ":" + seconds.ToString("00");
 
-            //有错误
+            scoreText.text = score.ToString("0000");
+
 
         }
 
-        //当时间到了，结束
-        /*else
+      
+        else
         {
-            gamePanel.SetActive(false);
-            //隐藏面板
-            Instantiate(winPrefab);//实例化winPrefab，耗内存,显示胜利标语(
-            StopAllCoroutines();// 游戏胜利，停止所有携程(
-            SetGameState(false);
-            SetGameState(false);
-        }
-
-        //游戏结束，重载游戏
-        if (noweat == pacdotNum)
-        {
+          
+           // Instantiate(winPrefab);//实例化winPrefab，耗内存,显示胜利标语(改
+            //StopAllCoroutines();// 游戏胜利，停止所有携程(
+           
             if (Input.anyKeyDown)//按下键即可
             {
                 SceneManager.LoadScene(0);
             }
         }
-        */
 
-        //判断game面板没有被隐藏。更新分数
+        
+            
+        
 
-        if (gamePanel.activeInHierarchy)
-        {
-            scoreText.text = score.ToString("0000");
+        
 
-        }
 
     }
 
@@ -160,7 +139,7 @@ public class GameManager : MonoBehaviour
         Invoke("CreateSuperSnack", 10f);
         isSuperPlayer = true;
         FreezeSnack();
-        Invoke("RecoveryBarrier", 3f);
+        Invoke("RecoverySnack", 3f);
 
     }
 
@@ -168,7 +147,7 @@ public class GameManager : MonoBehaviour
     // 生成超级零食
     private void CreateSuperSnack()
     {
-        if (snackGos.Count < 3)
+        if (snackGos.Count < 2)
         {
             return;//防止10s和摧毁i两个线程冲突
         }
@@ -184,11 +163,11 @@ public class GameManager : MonoBehaviour
 
     }
 
-    //冻结敌人,改到这里了
+ 
     private void FreezeSnack()
     {
 
-        SnacksMove._instance.Snacks.transform.GetComponentInChildren<SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+          GameObject.Find("Snacks").GetComponentInChildren <SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
 
 
     }
@@ -196,16 +175,11 @@ public class GameManager : MonoBehaviour
     private void DisFreezeSnack()
     {
 
-
-        SnacksMove._instance.Snacks.transform.GetComponentInChildren<SpriteRenderer>().color = new Color(1f, 1f, 1f, 1f);
-
-    }
-
-    //UI 初始不动
-    private void SetGameState(bool state)
-    {
-        SnacksMove._instance.Snacks.transform.GetComponentInChildren<SnacksMove>().enabled = state;//是有问题的，他身上没挂这个代码
+      
+            GameObject.Find("Snacks").GetComponentInChildren<SpriteRenderer>().color =   new Color(1f, 1f, 1f, 1f);
 
     }
+
+ 
 }
     

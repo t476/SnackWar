@@ -6,6 +6,7 @@ using UnityEngine.Audio;
 
 public class Menu : MonoBehaviour {
     public GameObject pauseMenu;
+    public GameObject RuleMenu;
     public AudioMixer audioMixer;
     private void Start()
     {
@@ -39,5 +40,15 @@ public class Menu : MonoBehaviour {
     public void SetVolume(float value)//混音器
     {
         audioMixer.SetFloat("MainVolume", value);
+    }
+    public void Rule()
+    {
+        RuleMenu.SetActive(true);
+        
+    }
+    public void ReturnGame()
+    {
+        RuleMenu.SetActive(false);
+       
     }
 }
