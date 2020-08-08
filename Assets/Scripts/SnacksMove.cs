@@ -28,7 +28,7 @@ public class SnacksMove : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)//参数是被调用物
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player")&&(Input.GetKey(KeyCode.Space)))
         {
             Destroy(gameObject);
             GameManager.Instance.score += 100;

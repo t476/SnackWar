@@ -55,7 +55,7 @@ public class PlayerMove : MonoBehaviour
     {
       
         {
-            if (GameManager.Instance.isSuperPlayer)//这个跟那个一模一样为什么这个不行
+            if (GameManager.Instance.isSuperPlayer&&(Input.GetKey(KeyCode.Space)))//这个跟那个一模一样为什么这个不行
             {
                 if (collision.gameObject.CompareTag("barrier"))
                 {

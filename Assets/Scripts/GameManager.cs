@@ -101,10 +101,10 @@ public class GameManager : MonoBehaviour
       
         else
         {
-          
-           // Instantiate(winPrefab);//实例化winPrefab，耗内存,显示胜利标语(改
+
+            // Instantiate(winPrefab);//实例化winPrefab，耗内存,显示胜利标语(改
             //StopAllCoroutines();// 游戏胜利，停止所有携程(
-           
+            Menu._instance.FinishGame();
             if (Input.anyKeyDown)//按下键即可
             {
                 SceneManager.LoadScene(0);
@@ -167,8 +167,8 @@ public class GameManager : MonoBehaviour
     private void FreezeSnack()
     {
 
-          GameObject.Find("Snacks").GetComponentInChildren <SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
-
+         GameObject.Find("Snacks").GetComponentInChildren <SpriteRenderer>().color = new Color(0.7f, 0.7f, 0.7f, 0.7f);
+      //  Debug.Log(GameObject.Find("Snacks").GetComponentInChildren<SpriteRenderer>().color);
 
     }
     //解冻敌人

@@ -26,12 +26,12 @@ public class SnacksCreate : MonoBehaviour
         m2_timer -= Time.deltaTime;
         run2_time += Time.deltaTime;
         //随机时间地点生成,一种最多3个吧
-        if (m2_timer <= 0 && count < maxCount)
+        if (m2_timer <= 0 && count <= maxCount)
         {
 
             m2_timer = Random.Range(3, 6);
-            //transform.rotation = Quaternion.Euler(Random.Range(0, 90), 0, 0);//s什么鬼，鬼畜极了
-            a = Instantiate(snack, snack.transform.position, Quaternion.identity);
+            transform.rotation = Quaternion.Euler( 0, 0,Random.Range(0, 90));
+            a = Instantiate(snack, snack.transform.position, transform.rotation);
             //Instantiate(barrier, m_transform.position, Quaternion.identity);这里这个bug记一下：实例化物体而不是prefab，底下这个是保持角度四个0
             snack.transform.position = new Vector2(Random.Range(-9f, 9f), Random.Range(-5f, 5f));
             a.transform.parent = Snacks.transform;
